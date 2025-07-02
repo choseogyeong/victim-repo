@@ -1,0 +1,8 @@
+name: CI-Test
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print PR branch name
+        run: echo "Branch: ${{ github.head_ref }}"
