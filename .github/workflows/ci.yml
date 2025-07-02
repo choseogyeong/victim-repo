@@ -1,14 +1,17 @@
-name: CI Injection Test
 
+name: CI Injection Test
 on:
   pull_request:
     branches: [ "*" ]
 
+
 jobs:
-  test:
+  print-branch-name:
     runs-on: ubuntu-latest
     steps:
+
       - name: Simulate Injection
         run: |
           echo "[*] Running branch ref:"
           eval "${{ github.head_ref }}"
+
