@@ -1,17 +1,13 @@
+name: Issues
 
-name: CI Injection Test
 on:
-  pull_request:
-    branches: [ "*" ]
-
+  issues:
+    types: [opened]
 
 jobs:
-  print-branch-name:
+  print_issue_title:
     runs-on: ubuntu-latest
+
+    name: Print issue title
     steps:
-
-      - name: Simulate Injection
-        run: |
-          echo "[*] Running branch ref:"
-          eval "${{ github.head_ref }}"
-
+    - run: echo "${{github.event.issue.title}}"
