@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Send GITHUB_TOKEN to webhook
         env:
-          TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$GITHUB_TOKEN" ]; then
             echo " No token found"
