@@ -1,3 +1,1 @@
 # victim-repo
-
-hello test !
