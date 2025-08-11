@@ -1,0 +1,25 @@
+name: PR test (UNSAFE)
+on: [pull_request]
+
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use branch workspace (UNSAFE)
+        uses: dflook/terraform-new-workspace@v2
+        with:
+          path: my-terraform-config
+          workspace: ${{ github.head_ref }}
+
+      - name: Apply (UNSAFE)
+        id: apply
+        uses: dflook/terraform-apply@v2
+        with:
+          path: my-terraform-config
+          workspace: ${{ github.head_ref }}
+          auto_approve: true
+
+      - name: Show URL
+        run: echo "URL=${{ steps.apply.outputs.url }}"
