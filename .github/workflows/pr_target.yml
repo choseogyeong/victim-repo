@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: title
-        uses: overtrue/conventional-pr-title@v1
+        uses: overtrue/conventional-pr-title@v1.0.0
         continue-on-error: true           # 액션 실패해도 다음 스텝 진행
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
