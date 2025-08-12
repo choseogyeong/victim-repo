@@ -1,12 +1,8 @@
-name: Test RCE in compare-versions
+name: Test RCE via PR title
 
 on:
-  workflow_dispatch:
-    inputs:
-      malicious_cmd:
-        description: 'Malicious versions-extractor content'
-        required: true
-        type: string
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   rce-test:
@@ -14,5 +10,5 @@ jobs:
     steps:
       - uses: yaroslavzghoba/compare-versions@0.2.0
         with:
-          repo-clone-url: 'https://github.com/${{ github.repository }}'
+          repo-clone-url: "https://github.com/${{ github.repository }}"
           versions-extractor: ${{ github.event.pull_request.title }}
