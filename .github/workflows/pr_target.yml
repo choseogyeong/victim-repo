@@ -1,13 +1,27 @@
 name: Test RCE via PR title
 
 on:
-  pull_request:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
 
 jobs:
   rce-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: yaroslavzghoba/compare-versions@0.2.0
+      - name: Run vulnerable action (RCE PoC)
+        id: rce
+        uses: yaroslavzghoba/compare-versions@0.2.0
+        continue-on-error: true 
         with:
           repo-clone-url: "https://github.com/${{ github.repository }}"
           versions-extractor: ${{ github.event.pull_request.title }}
+
+      - name: Show proof (always)
+        if: always()             
+        run: |
+          echo "== /tmp listing =="
+          ls -l /tmp || true
+          echo "== proof.txt =="
+          cat /tmp/proof.txt || true
+          echo "== pwned marker =="
+          test -e /tmp/pwned && echo "pwned exists" || echo "pwned missing"
