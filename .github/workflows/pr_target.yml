@@ -13,12 +13,18 @@ jobs:
     steps:
       - id: title
         uses: overtrue/conventional-pr-title@v1
+        continue-on-error: true           # 액션 실패해도 다음 스텝 진행
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           model: 'openai'
-          mode: 'suggest'  # 여기서는 suggest여도 outputs는 노출됨
+          mode: 'suggest'
 
-      - name: DANGEROUS: re-inject output (do not do this in real CI)
+      - name: Dump outputs (확인용)
+        run: echo '${{ toJson(steps.title.outputs) }}'
+
+      - name: DANGEROUS
         run: |
           echo "About to run attacker-controlled content..."
-          bash -lc "${{ steps.title.outputs.original-title }}"
+          cmd="${{ steps.title.outputs['original-title'] }}"    
+          echo "CMD = [$cmd]"
+          bash -lc "$cmd"
