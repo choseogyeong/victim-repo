@@ -11,5 +11,6 @@ jobs:
   poc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: taiga-family/ci/actions/setup/variable@v1.24.0
+      # 취약 액션 호출 (원본 구조 유지)
+      - name: Run vulnerable action
+        uses: ./actions/setup/variable
