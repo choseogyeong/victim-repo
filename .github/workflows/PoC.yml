@@ -1,0 +1,15 @@
+name: PoC 
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  poc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiga-family/ci/actions/setup/variable@v1.24.0
