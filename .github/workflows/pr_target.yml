@@ -2,7 +2,6 @@ name: Test RCE via PR title
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
   rce-test:
