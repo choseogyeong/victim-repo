@@ -1,10 +1,24 @@
-on: pull_request_target
+name: PR Title Output Injection (PoC)
+
+on:
+  pull_request:
+    types: [opened, edited]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  risky_job:
+  demo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event.pull_request.body }}"
+      - id: title
+        uses: overtrue/conventional-pr-title@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          model: 'openai'
+          mode: 'suggest'  # 여기서는 suggest여도 outputs는 노출됨
+
+      - name: DANGEROUS: re-inject output (do not do this in real CI)
+        run: |
+          echo "About to run attacker-controlled content..."
+          bash -lc "${{ steps.title.outputs.original-title }}"
