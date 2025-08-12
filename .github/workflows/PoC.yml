@@ -12,5 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # 취약 액션 호출 (원본 구조 유지)
+      - uses: actions/checkout@v4
       - name: Run vulnerable action
         uses: ./actions/setup/variable
