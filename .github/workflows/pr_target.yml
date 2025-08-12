@@ -1,30 +1,18 @@
-name: PR Title Output Injection (PoC)
+name: Test RCE in compare-versions
 
 on:
-  pull_request:
-    types: [opened, edited]
-
-permissions:
-  contents: read
+  workflow_dispatch:
+    inputs:
+      malicious_cmd:
+        description: 'Malicious versions-extractor content'
+        required: true
+        type: string
 
 jobs:
-  demo:
+  rce-test:
     runs-on: ubuntu-latest
     steps:
-      - id: title
-        uses: overtrue/conventional-pr-title@v1.0.0
-        continue-on-error: true           # 액션 실패해도 다음 스텝 진행
+      - uses: yaroslavzghoba/compare-versions@0.2.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          model: 'openai'
-          mode: 'suggest'
-
-      - name: Dump outputs (확인용)
-        run: echo '${{ toJson(steps.title.outputs) }}'
-
-      - name: DANGEROUS
-        run: |
-          echo "About to run attacker-controlled content..."
-          cmd="${{ steps.title.outputs['original-title'] }}"    
-          echo "CMD = [$cmd]"
-          bash -lc "$cmd"
+          repo-clone-url: 'https://github.com/${{ github.repository }}'
+          versions-extractor: ${{ github.event.pull_request.title }}
